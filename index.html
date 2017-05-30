@@ -6,10 +6,37 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.0/react.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.0/react-dom.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.6.15/browser.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&amp;subset=cyrillic" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="app.css">
 </head>
 <body>
-    <div id='mount-point'></div>
-    <script type="text/babel" src="app.js"></script>
+<div id='mount-point'>
+    <div class="ToDoApp">
+        <input type="text" class="Input" placeholder="Add new task...">
+        <div class="TaskBoard">
+            <div class="Task">
+                <span class="Task__checkbox Task__checkbox--done"></span>
+                <span class="Task__text">Learn React</span>
+                <span class="Task__delete">&#10006;</span>
+            </div>
+            <div class="Task">
+                <span class="Task__checkbox"></span>
+                <span class="Task__text">Learn Redux</span>
+                <span class="Task__delete">&#10006;</span>
+            </div>
+            <div class="Task">
+                <span class="Task__checkbox"></span>
+                <span class="Task__text">Write some app</span>
+                <span class="Task__delete">&#10006;</span>
+            </div>
+        </div>
+        <div class="Controls">
+            <div class="Controls__filter">All</div>
+            <div class="Controls__filter">New</div>
+            <div class="Controls__filter">Completed</div>
+        </div>
+    </div>
+</div>
+<script type="text/babel" src="app.js"></script>
 </body>
 </html>
