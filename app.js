@@ -54,14 +54,14 @@ var Input = React.createClass({
 
   render: function () {
     return (
-      <div>
+      <div className="AddTask">
         <input type="text"
-               className="Input"
+               className="AddTask__input"
                placeholder="Add new task..."
                onChange={this.handleTextChange}
                value={this.state.text}
         />
-        <button type="button" onClick={this.handleTaskAdd}>Add</button>
+        <button className="AddTask__button" type="button" onClick={this.handleTaskAdd}>Add</button>
       </div>
       )
 
