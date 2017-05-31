@@ -1,9 +1,28 @@
+/*var TASKS = [
+  "Learn React",
+  "Learn Redux",
+  "Write some app",
+  "Go home"
+];*/
+
 var TodoApp = React.createClass({
+  getInitialState: function () {
+    return {
+      tasks: []
+    }
+  },
+
+  handleTaskAdd: function (newTask) {
+    var newTasks = this.state.tasks.slice();
+    newTasks.unshift(newTask);
+    this.setState({tasks: newTasks});
+  },
+
   render: function () {
     return (
       <div className="ToDoApp">
-        <Input />
-        <TaskBoard />
+        <Input onTaskAdd={this.handleTaskAdd} />
+        <TaskBoard tasks={this.state.tasks} />
         <Controls />
       </div>
     );
@@ -11,31 +30,55 @@ var TodoApp = React.createClass({
 });
 
 var Input = React.createClass({
+  getInitialState: function () {
+    return {
+      text: ''
+    }
+  },
+
+  handleTaskAdd: function () {
+    var newTask = {
+      id: Date.now(),
+      text: this.state.text,
+      status: ''
+    };
+
+    this.props.onTaskAdd(newTask);
+    this.setState ({text: ''});
+  },
+
+  handleTextChange: function (event) {
+    this.setState({text: event.target.value})
+  },
+
   render: function () {
-    return <input type="text" className="Input" placeholder="Add new task..."/>
+    return (
+      <div>
+        <input type="text" className="Input" placeholder="Add new task..." onChange={this.handleTextChange} />
+        <button type="button" onClick={this.handleTaskAdd}>Add</button>
+      </div>
+      )
+
   }
 });
 
 var TaskBoard = React.createClass({
   render: function () {
+    var tasks = this.props.tasks.map(function (task) {
+      return <Task key={task.id} text={task.text} status={task.status}/>
+    }.bind(this));
+    return <div className="TaskBoard"> {tasks} </div>
+  }
+});
+
+var Task = React.createClass({
+  render: function () {
     return (
-      <div className="TaskBoard">
-        <div className="Task">
-          <span className="Task__checkbox Task__checkbox--done"/>
-          <span className="Task__text">Learn React</span>
-          <span className="Task__delete">&#10006;</span>
-        </div>
         <div className="Task">
           <span className="Task__checkbox"/>
-          <span className="Task__text">Learn Redux</span>
-          <span className="Task__delete">&#10006;</span>
+          <span className="Task__text">{this.props.text}</span>
+          <span className="Task__delete" onClick={this.props.onDelete}>&#10006;</span>
         </div>
-        <div className="Task">
-          <span className="Task__checkbox"/>
-          <span className="Task__text">Write some app</span>
-          <span className="Task__delete">&#10006;</span>
-        </div>
-      </div>
     );
   }
 });
