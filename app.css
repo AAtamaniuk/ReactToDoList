@@ -78,12 +78,12 @@ body {
   border-color: black;
 }
 
-.Task__checkbox--done {
+.Task__checkbox.done {
   border: none;
   background-color: #8BC34A;
 }
 
-.Task__checkbox--done:after {
+.Task__checkbox.done:after {
   position: absolute;
   content: "";
   width: 12px;
@@ -96,12 +96,12 @@ body {
   transform: rotate(-53deg);
 }
 
-.Task__checkbox--done:hover {
+/*.Task__checkbox.done:hover {
   border: none;
   background-color: red;
-}
+}*/
 
-.Task__checkbox--done:hover:before {
+/*.Task__checkbox.done:hover:before {
   position: absolute;
   content: "";
   width: 0px;
@@ -114,7 +114,7 @@ body {
   transform: rotate(45deg);
 }
 
-.Task__checkbox--done:hover:after {
+.Task__checkbox.done:hover:after {
   position: absolute;
   content: "";
   width: 0;
@@ -125,13 +125,13 @@ body {
   left: 11px;
   display: block;
   transform: rotate(-45deg);
-}
+}*/
 
 .Task__checkbox:hover + .Task__text {
   color: black;
 }
 
-.Task__checkbox--done + .Task__text {
+.Task__checkbox.done + .Task__text {
   text-decoration: line-through;
   color: #9e9e9e;
 }
@@ -139,6 +139,9 @@ body {
 .Task__text {
   display: inline-block;
   flex-grow: 1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .Task__delete {

@@ -19,11 +19,24 @@ var TodoApp = React.createClass({
     this.setState({tasks: newTasks});
   },
 
+  handleTaskDone: function (task) {
+    var newTasks = this.state.tasks.slice();
+    newTasks.map(function (el) {
+      if (el.id === task.id) {
+        el.status = "done"
+      }
+    });
+    this.setState({tasks: newTasks});
+  },
+
   render: function () {
     return (
       <div className="ToDoApp">
-        <Input onTaskAdd={this.handleTaskAdd} />
-        <TaskBoard tasks={this.state.tasks} onTaskDelete={this.handleTaskDelete} />
+        <Input onTaskAdd={this.handleTaskAdd}/>
+        <TaskBoard tasks={this.state.tasks}
+                   onTaskDelete={this.handleTaskDelete}
+                   onTaskDone={this.handleTaskDone}
+        />
         <Controls />
       </div>
     );
@@ -45,7 +58,7 @@ var Input = React.createClass({
     };
 
     this.props.onTaskAdd(newTask);
-    this.setState ({text: ''});
+    this.setState({text: ''});
   },
 
   handleTextChange: function (event) {
@@ -63,7 +76,7 @@ var Input = React.createClass({
         />
         <button className="AddTask__button" type="button" onClick={this.handleTaskAdd}>Add</button>
       </div>
-      )
+    )
 
   }
 });
@@ -71,6 +84,7 @@ var Input = React.createClass({
 var TaskBoard = React.createClass({
   render: function () {
     var onTaskDelete = this.props.onTaskDelete;
+    var onTaskDone = this.props.onTaskDone;
     var tasks = this.props.tasks.map(function (task) {
       return (
         <Task
@@ -78,6 +92,7 @@ var TaskBoard = React.createClass({
           text={task.text}
           status={task.status}
           onDelete={onTaskDelete.bind(null, task)}
+          onDone={onTaskDone.bind(null, task)}
         />
       )
     }.bind(this));
@@ -88,11 +103,11 @@ var TaskBoard = React.createClass({
 var Task = React.createClass({
   render: function () {
     return (
-        <div className="Task">
-          <span className="Task__checkbox"/>
-          <span className="Task__text">{this.props.text}</span>
-          <span className="Task__delete" onClick={this.props.onDelete}>&#10006;</span>
-        </div>
+      <div className="Task">
+        <span className={"Task__checkbox " + this.props.status} onClick={this.props.onDone}/>
+        <span className="Task__text">{this.props.text}</span>
+        <span className="Task__delete" onClick={this.props.onDelete}>&#10006;</span>
+      </div>
     );
   }
 });
