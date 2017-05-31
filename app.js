@@ -1,10 +1,3 @@
-/*var TASKS = [
-  "Learn React",
-  "Learn Redux",
-  "Write some app",
-  "Go home"
-];*/
-
 var TodoApp = React.createClass({
   getInitialState: function () {
     return {
@@ -18,11 +11,19 @@ var TodoApp = React.createClass({
     this.setState({tasks: newTasks});
   },
 
+  handleTaskDelete: function (task) {
+    var taskId = task.id;
+    var newTasks = this.state.tasks.filter(function (task) {
+      return task.id !== taskId;
+    });
+    this.setState({tasks: newTasks});
+  },
+
   render: function () {
     return (
       <div className="ToDoApp">
         <Input onTaskAdd={this.handleTaskAdd} />
-        <TaskBoard tasks={this.state.tasks} />
+        <TaskBoard tasks={this.state.tasks} onTaskDelete={this.handleTaskDelete} />
         <Controls />
       </div>
     );
@@ -54,7 +55,12 @@ var Input = React.createClass({
   render: function () {
     return (
       <div>
-        <input type="text" className="Input" placeholder="Add new task..." onChange={this.handleTextChange} />
+        <input type="text"
+               className="Input"
+               placeholder="Add new task..."
+               onChange={this.handleTextChange}
+               value={this.state.text}
+        />
         <button type="button" onClick={this.handleTaskAdd}>Add</button>
       </div>
       )
@@ -64,10 +70,18 @@ var Input = React.createClass({
 
 var TaskBoard = React.createClass({
   render: function () {
+    var onTaskDelete = this.props.onTaskDelete;
     var tasks = this.props.tasks.map(function (task) {
-      return <Task key={task.id} text={task.text} status={task.status}/>
+      return (
+        <Task
+          key={task.id}
+          text={task.text}
+          status={task.status}
+          onDelete={onTaskDelete.bind(null, task)}
+        />
+      )
     }.bind(this));
-    return <div className="TaskBoard"> {tasks} </div>
+    return <div className="TaskBoard">{tasks}</div>
   }
 });
 
