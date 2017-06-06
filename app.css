@@ -78,12 +78,12 @@ body {
   border-color: black;
 }
 
-.Task__checkbox.done {
+.Task__checkbox.completed {
   border: none;
   background-color: #8BC34A;
 }
 
-.Task__checkbox.done:after {
+.Task__checkbox.completed:after {
   position: absolute;
   content: "";
   width: 12px;
@@ -96,12 +96,12 @@ body {
   transform: rotate(-53deg);
 }
 
-/*.Task__checkbox.done:hover {
+/*.Task__checkbox.completed:hover {
   border: none;
   background-color: red;
 }*/
 
-/*.Task__checkbox.done:hover:before {
+/*.Task__checkbox.completed:hover:before {
   position: absolute;
   content: "";
   width: 0px;
@@ -114,7 +114,7 @@ body {
   transform: rotate(45deg);
 }
 
-.Task__checkbox.done:hover:after {
+.Task__checkbox.completed:hover:after {
   position: absolute;
   content: "";
   width: 0;
@@ -131,7 +131,7 @@ body {
   color: black;
 }
 
-.Task__checkbox.done + .Task__text {
+.Task__checkbox.completed + .Task__text {
   text-decoration: line-through;
   color: #9e9e9e;
 }
@@ -172,6 +172,11 @@ body {
 }
 
 .Filters__button:hover {
+  color: black;
+  font-weight: bold;
+}
+
+.Filters__button.active {
   color: black;
   font-weight: bold;
 }

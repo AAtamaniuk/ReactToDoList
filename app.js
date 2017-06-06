@@ -38,14 +38,14 @@ var TodoApp = React.createClass({
     var newTasks = this.state.tasks.slice();
     newTasks.map(function (el) {
       if (el.id === task.id) {
-        el.status = "done"
+        el.status = 'completed'
       }
     });
     this.setState({tasks: newTasks});
   },
 
   handleFilterChange: function (filter) {
-    this.setState({filter: filter});
+    this.setState({filter: filter.toLowerCase()});
   },
 
   render: function () {
@@ -53,11 +53,14 @@ var TodoApp = React.createClass({
       <div className="ToDoApp">
         <Input onTaskAdd={this.handleTaskAdd} />
         <TaskBoard
-          tasks={this.state.tasks}
+          tasks={this._getDisplayedTasks(this.state.tasks, this.state.filter)}
           onTaskDelete={this.handleTaskDelete}
           onTaskDone={this.handleTaskDone}
         />
-        <Filters onFilterChange={this.handleFilterChange} />
+        <Filters
+          onFilterChange={this.handleFilterChange}
+          activeFilter={this.state.filter}
+        />
       </div>
     );
   },
@@ -65,6 +68,22 @@ var TodoApp = React.createClass({
   _updateLocalStorage: function () {
     var tasks = JSON.stringify(this.state.tasks);
     localStorage.setItem('tasks', tasks);
+  },
+
+  _getDisplayedTasks: function (tasks, filter) {
+    if (filter === 'completed') {
+      return tasks.filter(function (task) {
+          return task.status === filter;
+        }
+      );
+    }
+    if (filter === 'new') {
+      return tasks.filter(function (task) {
+          return task.status === filter;
+        }
+      );
+    }
+    return tasks;
   }
 });
 
@@ -141,6 +160,7 @@ var Filters = React.createClass({
   render: function () {
     var filtersButtons = ["All", "New", "Completed"];
     var onFilterChange = this.props.onFilterChange;
+    var activeFilter = this.props.activeFilter;
     return (
       <ul className="Filters">
         {
@@ -148,7 +168,7 @@ var Filters = React.createClass({
             return (
               <li
                 key={name}
-                className="Filters__button"
+                className={"Filters__button " + (name.toLowerCase() === activeFilter ? "active" : "")}
                 onClick={onFilterChange.bind(null, name)}
               >
                 {name}
