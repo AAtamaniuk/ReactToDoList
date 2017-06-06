@@ -155,21 +155,23 @@ body {
   color: black;
 }
 
-.Controls {
+.Filters {
   display: flex;
+  padding-left: 0;
   justify-content: space-around;
   margin: 20px auto 0;
   font-size: 20px;
   color: #585858;
   border-top: 2px solid #585858;
   padding-top: 10px;
+  list-style: none;
 }
 
-.Controls__filter {
+.Filters__button {
   cursor: pointer;
 }
 
-.Controls__filter:hover {
+.Filters__button:hover {
   color: black;
   font-weight: bold;
 }

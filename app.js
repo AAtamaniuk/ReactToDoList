@@ -114,12 +114,27 @@ var Task = React.createClass({
 
 var Controls = React.createClass({
   render: function () {
+    var filtersButtons = ["All", "New", "Completed"];
     return (
-      <div className="Controls">
-        <div className="Controls__filter">All</div>
-        <div className="Controls__filter">New</div>
-        <div className="Controls__filter">Completed</div>
-      </div>
+      <ul className="Filters">
+        {
+          filtersButtons.map(function (name) {
+            return (
+            <li
+              key={name}
+              className="Filters__button"
+              onClick={console.log(name)
+              }
+            >
+              {name}
+            </li>
+            );
+          })
+        }
+        {/*<li className="Filters__button">All</li>
+        <li className="Filters__button">New</li>
+        <li className="Filters__button">Completed</li>*/}
+      </ul>
     );
   }
 });
