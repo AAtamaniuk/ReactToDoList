@@ -1,8 +1,20 @@
 var TodoApp = React.createClass({
   getInitialState: function () {
     return {
-      tasks: []
+      tasks: [],
+      filter: "all"
     }
+  },
+
+  componentDidMount: function () {
+    var localTasks = JSON.parse(localStorage.getItem('tasks'));
+    if (localTasks) {
+      this.setState({tasks: localTasks});
+    }
+  },
+
+  componentDidUpdate: function () {
+    this._updateLocalStorage();
   },
 
   handleTaskAdd: function (newTask) {
@@ -29,17 +41,27 @@ var TodoApp = React.createClass({
     this.setState({tasks: newTasks});
   },
 
+  handleFilterChange: function (filter) {
+    this.setState({filter: filter});
+  },
+
   render: function () {
     return (
       <div className="ToDoApp">
-        <Input onTaskAdd={this.handleTaskAdd}/>
-        <TaskBoard tasks={this.state.tasks}
-                   onTaskDelete={this.handleTaskDelete}
-                   onTaskDone={this.handleTaskDone}
+        <Input onTaskAdd={this.handleTaskAdd} />
+        <TaskBoard
+          tasks={this.state.tasks}
+          onTaskDelete={this.handleTaskDelete}
+          onTaskDone={this.handleTaskDone}
         />
-        <Controls />
+        <Filters onFilterChange={this.handleFilterChange} />
       </div>
     );
+  },
+
+  _updateLocalStorage: function () {
+    var tasks = JSON.stringify(this.state.tasks);
+    localStorage.setItem('tasks', tasks);
   }
 });
 
@@ -54,7 +76,7 @@ var Input = React.createClass({
     var newTask = {
       id: Date.now(),
       text: this.state.text,
-      status: ''
+      status: 'new'
     };
 
     this.props.onTaskAdd(newTask);
@@ -112,33 +134,29 @@ var Task = React.createClass({
   }
 });
 
-var Controls = React.createClass({
+var Filters = React.createClass({
   render: function () {
     var filtersButtons = ["All", "New", "Completed"];
+    var onFilterChange = this.props.onFilterChange;
     return (
       <ul className="Filters">
         {
           filtersButtons.map(function (name) {
             return (
-            <li
-              key={name}
-              className="Filters__button"
-              onClick={console.log(name)
-              }
-            >
-              {name}
-            </li>
-            );
+              <li
+                key={name}
+                className="Filters__button"
+                onClick={onFilterChange.bind(null, name)}
+              >
+                {name}
+              </li>
+            )
           })
         }
-        {/*<li className="Filters__button">All</li>
-        <li className="Filters__button">New</li>
-        <li className="Filters__button">Completed</li>*/}
       </ul>
     );
   }
 });
-
 
 ReactDOM.render(
   <TodoApp />,
