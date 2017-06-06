@@ -8,9 +8,12 @@ var TodoApp = React.createClass({
 
   componentDidMount: function () {
     var localTasks = JSON.parse(localStorage.getItem('tasks'));
-    if (localTasks) {
-      this.setState({tasks: localTasks});
-    }
+    localTasks.map(function (task) {
+      if (task.status === 'new') {
+        task.status = ''
+      }
+    });
+    localTasks && this.setState({tasks: localTasks});
   },
 
   componentDidUpdate: function () {
