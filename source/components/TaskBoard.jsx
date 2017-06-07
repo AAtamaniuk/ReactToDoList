@@ -1,5 +1,5 @@
 var React = require('react');
-var Task = require('Task');
+var Task = require('./Task.jsx');
 
 var TaskBoard = React.createClass({
   render: function () {

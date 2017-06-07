@@ -1,7 +1,7 @@
 var React = require('react');
-var Input = require('Input');
-var TaskBoard = require('TaskBoard');
-var Filters = require('Filters');
+var Input = require('./Input.jsx');
+var TaskBoard = require('./TaskBoard.jsx');
+var Filters = require('./Filters.jsx');
 
 var TodoApp = React.createClass({
   getInitialState: function () {

@@ -11,18 +11,14 @@ module.exports = {
     path: PATHS.build,
     filename: 'bundle.js'
   },
+
   module: {
     rules: [
-      {
-        test: /\.js$/,
-        exclude: [/node_modules/, /build/],
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['react']
-          }
-        }
+      { test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        loader: "babel-loader"
       }
     ]
   }
 };
+
